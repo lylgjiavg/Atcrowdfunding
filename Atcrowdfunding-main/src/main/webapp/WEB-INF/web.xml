@@ -19,7 +19,18 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
+	<!-- 把项目根路径到application对象中 -->
+	<listener>
+		<listener-class>club.lylgjiang.main.listener.ContextPathListener</listener-class>
+	</listener>
+	
+	<!-- 代码护体神兽 -->
+	<listener>
+		<listener-class>club.lylgjiang.main.listener.NoBugListener</listener-class>
+	</listener>
+	
+	
 	<!-- 字符编码过滤器 -->
 	<filter>
 		<filter-name>encoding</filter-name>
