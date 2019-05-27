@@ -12,9 +12,41 @@
 	<link rel="stylesheet" href="${contextPath }/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${contextPath }/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${contextPath }/css/login.css">
-	<style>
-
-	</style>
+	<script type="text/javascript">
+		function dologin() {
+	    	/* $("#loginForm").submit(); */
+	    	// 异步登录
+	    	var $loginacct = $("#loginacct");
+	    	var $userpswd = $("#userpswd");
+	    	
+	    	if($.trim($loginacct.val()) == ""){
+	    		alert("用户名不能为空!");
+	    		$loginacct.val("");
+	    		return false;
+	    	}
+	    	
+	    	jQuery.ajax({
+	    			type : "POST",
+	    			url: "${contextPath }/doLogin.do",
+	    			data: {
+	    				"loginacct": $loginacct.val(),
+	    				"userpswd": $userpswd.val()
+	    			},
+	    			error: function(data){
+	    				alert(data.msg);
+	    			},
+	    			success: function(data, textStatus, jqXHR){
+	    				if(data.status == "200"){
+		    				alert(data.msg);
+		    				window.location.href = "${contextPath }/main.htm";
+	    				}else{
+	    					alert(data.msg);
+	    				}
+	    			}
+	    	});
+	    	
+	    }
+	</script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,11 +62,11 @@
       <form id="loginForm" action="${contextPath }/doLogin.do" method="post" class="form-signin" role="form">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户登录</h2>
 		  <div class="form-group has-success has-feedback">
-			<input type="text" class="form-control" id="inputSuccess4" name="loginacct" placeholder="请输入登录账号" autofocus>
+			<input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登录账号" autofocus>
 			<span class="glyphicon glyphicon-user form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-success has-feedback">
-			<input type="password" class="form-control" id="inputSuccess4" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
+			<input type="password" class="form-control" id="userpswd" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
 			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-success has-feedback">
@@ -61,15 +93,7 @@
     <script src="${contextPath }/jquery/jquery-2.1.1.min.js"></script>
     <script src="${contextPath }/bootstrap/js/bootstrap.min.js"></script>
     <script>
-    function dologin() {
-    	$("#loginForm").submit();
-        /* var type = $(":selected").val();
-        if ( type == "user" ) {
-            window.location.href = "main.html";
-        } else {
-            window.location.href = "index.html";
-        } */
-    }
+	    
     </script>
   </body>
 </html>
